@@ -1,0 +1,35 @@
+{% extends 'posts/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+    <!-- Post Content -->
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                                    
+                    <h2 class="section-heading">The write up.</h2>
+
+                    <blockquote>{{post.text}}</blockquote>
+
+                    <a href="#">
+                       
+                        <img
+                        class="img-responsive"
+                  src="{{post.image.url}}"
+                  alt="Smiley face"
+                  width="80%"
+                  height="80%"
+                />
+                    </a>
+                    <blockquote>{{post.author}}</blockquote>
+                    <hr>
+                    <blockquote>{{post.created_at}}</blockquote>
+                    </div>
+            </div>
+        </div>
+
+    <hr>
+
+    {% endblock %}
