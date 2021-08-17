@@ -1,10 +1,13 @@
 from os import pipe
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from .models import posts
 from subprocess import run,PIPE
 import sys
-from django.contrib.auth.models import User, auth
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
+
 # Create your views here.
+# show the the posts im the database 
 def index(request):
     Posts = posts.objects.all()[:20]
    
@@ -17,13 +20,14 @@ def index(request):
 
     return render(request, 'posts/index.html',context)
 
+# call and run the speech.py file on button click
 def extenal(request):
      v = run(sys.executable,'//home//victor//Desktop//projects//Django@finale//speech.py', shell=True,stdout=PIPE)
 
-     return render(request,'posts/index.html', {'data':v})
+     return render(request,'index.html', {'data':v})
 
 
-
+# get the stored posts in the database
 def post(request, id):
     Post = posts.objects.get(id=id)
 
@@ -41,19 +45,17 @@ def contact(request):
     
     return render( request,'posts/contact.html')
 
+# register the users into the database with the defualt django usercreation templete
 def register(request):
     if request.method == 'POST':
-        first_name = request.POST['first_Name']
-        last_name = request.POST['last_Name']
-        username = request.POST['username']
-        email = request.POST['email']
-        password1 = request.POST['password1']
-        password2 = request.POST['password2']
-        user = User.objects.create_user(username=username, password=password1,email=email,first_name=first_name,last_name=last_name)
-        user.save()
-        print('user created')
-        
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect(request, 'posts/register.html')  
+            
 
-    else:
-        return render(request, 'posts/register.html')    
-    return render( request,'posts/register.html')
+    else: 
+        form = UserCreationForm()        
+    args = {'form':form}
+    return render(request, 'posts/register.html', args)
+        

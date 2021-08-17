@@ -8,7 +8,8 @@ urlpatterns = [
    url(r'^about',views.about, name='about'),
    url(r'^contact',views.contact, name='contact'),
    url(r'^register',views.register, name='register'),
-    url(r'^extenal',views.extenal ),
+   
+     url(r'^$',views.extenal, name='extenal'),
  
 ]
 

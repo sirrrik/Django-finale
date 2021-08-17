@@ -4,11 +4,14 @@ from django.conf.urls import url
 from django.urls.conf import include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.urls import path, include
+# from main.views import IndexPageView, ChangeLanguageView
 
 urlpatterns = [
     url(r'^$',include('Posts.urls')),
     path('admin/', admin.site.urls),
     url(r'^Posts/',include('Posts.urls')),
+
    
 ]
 
